@@ -15,6 +15,8 @@ protocol KeyboardDelegate {
     func strikethrough(_ selected: Bool)
 }
 
+typealias AttributesDictionary = [NSAttributedString.Key: Any]
+
 class CustomKeyboard: UIView {
     
     //MARK: - Properties
@@ -59,6 +61,7 @@ class CustomKeyboard: UIView {
     private(set) var isStrikethrough: Bool = false
     
     var delegate: KeyboardDelegate?
+    var attributesDictionary: AttributesDictionary = [:]
     
     //MARK: - Initializers
     
@@ -87,7 +90,7 @@ class CustomKeyboard: UIView {
         contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     }
     
-    //MARK: - Methods
+    //MARK: - Actions
     
     @IBAction func onTap(_ sender: UIButton) {
         sender.isSelected.toggle()

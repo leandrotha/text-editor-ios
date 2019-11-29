@@ -13,14 +13,5 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tvTest.delegate = self
-    }
-}
-
-extension ViewController: UITextViewDelegate {
-    func textViewDidChangeSelection(_ textView: UITextView) {
-        if let range = textView.selectedTextRange {
-            print(textView.text(in: range))
-        }
     }
 }

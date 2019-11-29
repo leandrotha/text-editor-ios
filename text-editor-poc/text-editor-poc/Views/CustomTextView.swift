@@ -13,19 +13,19 @@ class CustomTextView: UITextView {
     
     //MARK: - Properties
     
-    var kb: CustomKeyboard = CustomKeyboard()
-    var dict: [NSAttributedString.Key: Any] = [:]
+    private var editorKeyboard: CustomKeyboard = CustomKeyboard()
+    
     var isBold: Bool {
-        get { return kb.isBold }
+        get { return editorKeyboard.isBold }
     }
     var isUnderline: Bool {
-        get { return kb.isUnderline }
+        get { return editorKeyboard.isUnderline }
     }
     var isItalic: Bool {
-        get { return kb.isItalic }
+        get { return editorKeyboard.isItalic }
     }
     var isStrikethrough: Bool {
-        get { return kb.isStrikethrough }
+        get { return editorKeyboard.isStrikethrough }
     }
     override var canBecomeFirstResponder: Bool {
         get { return true }
@@ -36,7 +36,8 @@ class CustomTextView: UITextView {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        kb.delegate = self
+        editorKeyboard.delegate = self
+       // delegate = self
         addOptions()
     }
     
@@ -47,9 +48,9 @@ class CustomTextView: UITextView {
         optionsToolbar.barStyle = .default
 
         let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let done: UIBarButtonItem = UIBarButtonItem(title: "Options", style: .done, target: self, action: #selector(toggleOptions))
+        let options: UIBarButtonItem = UIBarButtonItem(title: "Options", style: .done, target: self, action: #selector(toggleOptions))
 
-        let items = [flexSpace, done]
+        let items = [flexSpace, options]
         optionsToolbar.items = items
         optionsToolbar.sizeToFit()
 
@@ -60,7 +61,7 @@ class CustomTextView: UITextView {
         resignFirstResponder()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
             guard let self = self else {return}
-            self.inputView = self.inputView as? CustomKeyboard == nil ? self.kb : nil
+            self.inputView = self.inputView as? CustomKeyboard == nil ? self.editorKeyboard : nil
             self.becomeFirstResponder()
         }
     }
@@ -69,54 +70,57 @@ class CustomTextView: UITextView {
 //MARK: - Keyboard Delegate
 
 extension CustomTextView: KeyboardDelegate {
-    func updateFont() {
+    func chooseFont() -> UIFont {
+        guard let font = font else {return UIFont.systemFont(ofSize: 14)}
+        
         if isBold && isItalic {
-            font = font?.boldItalics()
+            return font.boldItalics()
         } else if !isBold && isItalic {
-            font = font?.italics()
-        } else if !isBold && !isItalic {
-            font = font?.default()
+            return font.italics()
+        } else if isBold && !isItalic {
+            return font.bold()
         } else {
-            font = font?.bold()
+            return font.default
         }
+    }
+    
+    func updateAttributes(selected: Bool, attribute: [NSAttributedString.Key: Any]) {
+        let cachedRange = selectedRange
+        let attributedString = NSMutableAttributedString(attributedString: attributedText.attributedSubstring(from: selectedRange))
+        
+        if !selected && attribute.keys.first! != .font {
+            editorKeyboard.attributesDictionary.removeValue(forKey: attribute.keys.first!)
+            attributedString.removeAttribute(attribute.keys.first!, range: NSRange(location: 0, length: attributedString.string.count))
+        } else {
+            editorKeyboard.attributesDictionary[attribute.keys.first!] = attribute.values.first!
+        }
+        
+        attributedString.addAttributes(editorKeyboard.attributesDictionary, range: NSRange(location: 0, length: attributedString.string.count))
+        
+        let lowerBound = NSRange(location: 0, length: selectedRange.lowerBound)
+        let upperBound = NSRange(location: selectedRange.upperBound, length: text.count - selectedRange.upperBound)
+        let prefixString = NSMutableAttributedString(attributedString: attributedText.attributedSubstring(from: lowerBound))
+        let sufixString = NSMutableAttributedString(attributedString: attributedText.attributedSubstring(from: upperBound))
+        
+        let finalText = prefixString + attributedString + sufixString
+        
+        attributedText = finalText
+        selectedRange = cachedRange
     }
     
     func bold(_ selected: Bool) {
-        updateFont()
+        updateAttributes(selected: selected, attribute: [.font: chooseFont()])
     }
     
     func italic(_ selected: Bool) {
-        updateFont()
+        updateAttributes(selected: selected, attribute: [.font: chooseFont()])
     }
     
     func underline(_ selected: Bool) {
-        if !selected {
-            dict.removeValue(forKey: .underlineStyle)
-        } else {
-            dict[.underlineStyle] = NSUnderlineStyle.single.rawValue
-        }
-        
-        let attrs = NSMutableAttributedString(string: text)
-        let range = NSRange(location: 0, length: text.count)
-        attrs.addAttributes(dict, range: range)
-        self.attributedText = attrs
-        
-        updateFont()
+        updateAttributes(selected: selected, attribute: [.underlineStyle: NSUnderlineStyle.single.rawValue])
     }
     
     func strikethrough(_ selected: Bool) {
-        if !selected {
-            dict.removeValue(forKey: .strikethroughStyle)
-        } else {
-            dict[.strikethroughStyle] = NSUnderlineStyle.single.rawValue
-        }
-        
-        let attrs = NSMutableAttributedString(string: text)
-        let range = NSRange(location: 0, length: text.count)
-        attrs.addAttributes(dict, range: range)
-        self.attributedText = attrs
-        
-        updateFont()
+        updateAttributes(selected: selected, attribute: [.strikethroughStyle: NSUnderlineStyle.single.rawValue])
     }
-
 }

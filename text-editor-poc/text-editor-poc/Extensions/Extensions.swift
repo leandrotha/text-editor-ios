@@ -18,8 +18,8 @@ extension UIFont {
         return self
     }
 
-    func `default`() -> UIFont {
-        return UIFont(name: "Helvetica", size: 14)!
+    var `default`: UIFont {
+        get { UIFont(name: "Helvetica", size: 14)! }
     }
     
     func italics() -> UIFont {
@@ -39,5 +39,20 @@ extension UIView {
     @IBInspectable var cornerRadius: CGFloat {
         get { return layer.cornerRadius }
         set { layer.cornerRadius = newValue }
+    }
+}
+
+extension NSMutableAttributedString {
+    static func + (left: NSMutableAttributedString, right: NSMutableAttributedString) -> NSMutableAttributedString {
+        let result = NSMutableAttributedString()
+        result.append(left)
+        result.append(right)
+        return result
+    }
+}
+
+extension Optional where Wrapped == String {
+    var length: Int {
+        get { return (self ?? "").count }
     }
 }
