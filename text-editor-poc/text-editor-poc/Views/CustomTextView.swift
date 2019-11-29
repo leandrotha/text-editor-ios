@@ -123,4 +123,23 @@ extension CustomTextView: KeyboardDelegate {
     func strikethrough(_ selected: Bool) {
         updateAttributes(selected: selected, attribute: [.strikethroughStyle: NSUnderlineStyle.single.rawValue])
     }
+    
+    func lineListing(_ selected: Bool) {
+        
+    }
+    
+    func bulletListing(_ selected: Bool) {
+        
+    }
+    
+    func numbersListing(_ selected: Bool) {
+        
+    }
+    
+    func indentingForward(_ selected: Bool) {
+    }
+    
+    func indentingBackward(_ selected: Bool) {
+        
+    }
 }

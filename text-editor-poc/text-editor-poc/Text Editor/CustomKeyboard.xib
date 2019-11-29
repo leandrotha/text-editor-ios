@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <device id="retina4_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
@@ -11,7 +11,12 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CustomKeyboard" customModule="text_editor_poc" customModuleProvider="target">
             <connections>
                 <outlet property="btnBold" destination="cDa-Z7-PLb" id="QLh-du-HaE"/>
+                <outlet property="btnBulletsListing" destination="4ub-95-apH" id="0Yl-xk-N9R"/>
+                <outlet property="btnIndentBackward" destination="PgB-KY-5aT" id="ltJ-le-RVR"/>
+                <outlet property="btnIndentForward" destination="bhu-5b-5b4" id="owA-YY-xnW"/>
                 <outlet property="btnItalic" destination="eKc-FB-wng" id="4RW-Yg-1tE"/>
+                <outlet property="btnLineListing" destination="bO6-lg-zcs" id="0mR-zv-fG0"/>
+                <outlet property="btnNumbersListing" destination="Qnt-Nc-tln" id="Wqt-QU-X50"/>
                 <outlet property="btnStrikethrough" destination="yIR-t2-N2d" id="qD9-aS-22G"/>
                 <outlet property="btnUnderline" destination="wdp-RL-bbT" id="Ztz-XD-VGN"/>
                 <outlet property="contentView" destination="TXA-8k-znZ" id="70k-oh-gJU"/>
@@ -50,29 +55,29 @@
                                     </constraints>
                                 </view>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cDa-Z7-PLb">
-                                    <rect key="frame" x="0.0" y="0.0" width="94" height="58"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="93" height="58"/>
                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="27"/>
                                     <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <state key="normal" title="B">
                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </state>
                                     <connections>
-                                        <action selector="onTap:" destination="-1" eventType="touchUpInside" id="WKO-5M-Mcb"/>
+                                        <action selector="onTapWordModifiers:" destination="-1" eventType="touchUpInside" id="iWk-4K-HPJ"/>
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eKc-FB-wng">
-                                    <rect key="frame" x="93" y="0.0" width="92" height="58"/>
+                                    <rect key="frame" x="94" y="0.0" width="90" height="58"/>
                                     <fontDescription key="fontDescription" type="italicSystem" pointSize="27"/>
                                     <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <state key="normal" title="I">
                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </state>
                                     <connections>
-                                        <action selector="onTap:" destination="-1" eventType="touchUpInside" id="du7-PZ-xXD"/>
+                                        <action selector="onTapWordModifiers:" destination="-1" eventType="touchUpInside" id="E3i-f7-YCo"/>
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wdp-RL-bbT">
-                                    <rect key="frame" x="184" y="0.0" width="94" height="58"/>
+                                    <rect key="frame" x="185" y="0.0" width="92" height="58"/>
                                     <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <state key="normal">
                                         <attributedString key="attributedTitle">
@@ -87,11 +92,11 @@
                                         </attributedString>
                                     </state>
                                     <connections>
-                                        <action selector="onTap:" destination="-1" eventType="touchUpInside" id="THN-U7-9Rj"/>
+                                        <action selector="onTapWordModifiers:" destination="-1" eventType="touchUpInside" id="m6U-Gb-K3f"/>
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yIR-t2-N2d">
-                                    <rect key="frame" x="277" y="0.0" width="97" height="58"/>
+                                    <rect key="frame" x="278" y="0.0" width="96" height="58"/>
                                     <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <state key="normal">
                                         <attributedString key="attributedTitle">
@@ -106,7 +111,7 @@
                                         </attributedString>
                                     </state>
                                     <connections>
-                                        <action selector="onTap:" destination="-1" eventType="touchUpInside" id="8Qc-z6-i5D"/>
+                                        <action selector="onTapWordModifiers:" destination="-1" eventType="touchUpInside" id="3vq-bb-FAa"/>
                                     </connections>
                                 </button>
                             </subviews>
@@ -117,20 +122,20 @@
                                 <constraint firstItem="N39-jK-6P2" firstAttribute="leading" secondItem="Bng-RQ-WfV" secondAttribute="leading" constant="91" id="Ddg-F2-VC4"/>
                                 <constraint firstAttribute="height" constant="58" id="Dtl-3D-vgc"/>
                                 <constraint firstItem="N39-jK-6P2" firstAttribute="centerY" secondItem="UU6-LY-lVP" secondAttribute="centerY" id="Jmu-Zb-ciY"/>
-                                <constraint firstItem="wdp-RL-bbT" firstAttribute="leading" secondItem="N39-jK-6P2" secondAttribute="leading" id="Kun-4a-0cD"/>
+                                <constraint firstItem="wdp-RL-bbT" firstAttribute="leading" secondItem="N39-jK-6P2" secondAttribute="leading" constant="1" id="Kun-4a-0cD"/>
                                 <constraint firstItem="uOP-JO-nW0" firstAttribute="centerY" secondItem="UU6-LY-lVP" secondAttribute="centerY" id="LwP-jl-SFB"/>
                                 <constraint firstAttribute="bottom" secondItem="yIR-t2-N2d" secondAttribute="bottom" id="N2Y-hl-PDp"/>
                                 <constraint firstAttribute="bottom" secondItem="cDa-Z7-PLb" secondAttribute="bottom" id="PXF-TF-FHz"/>
-                                <constraint firstItem="eKc-FB-wng" firstAttribute="leading" secondItem="Bng-RQ-WfV" secondAttribute="leading" id="SSZ-yF-3vj"/>
-                                <constraint firstItem="cDa-Z7-PLb" firstAttribute="trailing" secondItem="Bng-RQ-WfV" secondAttribute="trailing" id="Uww-RZ-p97"/>
+                                <constraint firstItem="eKc-FB-wng" firstAttribute="leading" secondItem="Bng-RQ-WfV" secondAttribute="leading" constant="1" id="SSZ-yF-3vj"/>
+                                <constraint firstItem="cDa-Z7-PLb" firstAttribute="trailing" secondItem="Bng-RQ-WfV" secondAttribute="trailing" constant="-1" id="Uww-RZ-p97"/>
                                 <constraint firstItem="cDa-Z7-PLb" firstAttribute="leading" secondItem="UU6-LY-lVP" secondAttribute="leading" id="WES-k8-qeH"/>
                                 <constraint firstItem="N39-jK-6P2" firstAttribute="height" secondItem="UU6-LY-lVP" secondAttribute="height" id="YBR-cW-L4w"/>
                                 <constraint firstItem="Bng-RQ-WfV" firstAttribute="leading" secondItem="UU6-LY-lVP" secondAttribute="leading" constant="93" id="cRQ-oo-vwz"/>
                                 <constraint firstItem="eKc-FB-wng" firstAttribute="top" secondItem="UU6-LY-lVP" secondAttribute="top" id="ccP-hm-Qem"/>
-                                <constraint firstItem="yIR-t2-N2d" firstAttribute="leading" secondItem="uOP-JO-nW0" secondAttribute="leading" id="fDS-FS-tZY"/>
-                                <constraint firstItem="wdp-RL-bbT" firstAttribute="trailing" secondItem="uOP-JO-nW0" secondAttribute="trailing" id="fJp-xO-zGW"/>
+                                <constraint firstItem="yIR-t2-N2d" firstAttribute="leading" secondItem="uOP-JO-nW0" secondAttribute="leading" constant="1" id="fDS-FS-tZY"/>
+                                <constraint firstItem="wdp-RL-bbT" firstAttribute="trailing" secondItem="uOP-JO-nW0" secondAttribute="trailing" constant="-1" id="fJp-xO-zGW"/>
                                 <constraint firstAttribute="trailing" secondItem="yIR-t2-N2d" secondAttribute="trailing" id="h4Q-Sy-LJy"/>
-                                <constraint firstItem="eKc-FB-wng" firstAttribute="trailing" secondItem="N39-jK-6P2" secondAttribute="trailing" id="hLQ-Ba-a2V"/>
+                                <constraint firstItem="eKc-FB-wng" firstAttribute="trailing" secondItem="N39-jK-6P2" secondAttribute="trailing" constant="-1" id="hLQ-Ba-a2V"/>
                                 <constraint firstItem="uOP-JO-nW0" firstAttribute="leading" secondItem="N39-jK-6P2" secondAttribute="leading" constant="93" id="hX9-25-3LN"/>
                                 <constraint firstAttribute="bottom" secondItem="eKc-FB-wng" secondAttribute="bottom" id="jCb-lm-PSg"/>
                                 <constraint firstItem="wdp-RL-bbT" firstAttribute="top" secondItem="UU6-LY-lVP" secondAttribute="top" id="jx5-mV-BRs"/>
@@ -165,6 +170,9 @@
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bO6-lg-zcs">
                                     <rect key="frame" x="0.0" y="0.0" width="79" height="58"/>
                                     <state key="normal" title="Button"/>
+                                    <connections>
+                                        <action selector="onTapListingOptions:" destination="-1" eventType="touchUpInside" id="fMs-hs-Ic7"/>
+                                    </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qnt-Nc-tln">
                                     <rect key="frame" x="78" y="0.0" width="80" height="58"/>
@@ -216,6 +224,9 @@
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PgB-KY-5aT">
                                     <rect key="frame" x="0.0" y="0.0" width="66" height="58"/>
                                     <state key="normal" title="Button"/>
+                                    <connections>
+                                        <action selector="onTapIndentingOptions:" destination="-1" eventType="touchUpInside" id="xut-lW-Pul"/>
+                                    </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bhu-5b-5b4">
                                     <rect key="frame" x="65" y="0.0" width="66" height="58"/>

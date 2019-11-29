@@ -56,3 +56,23 @@ extension Optional where Wrapped == String {
         get { return (self ?? "").count }
     }
 }
+
+extension UIButton {
+    func roundedLeftBorders() {
+        let path = UIBezierPath(roundedRect: bounds,
+                                byRoundingCorners:[.topLeft, .bottomLeft],
+                                cornerRadii: CGSize(width: 8, height:  8))
+        let maskLayer = CAShapeLayer()
+        maskLayer.path = path.cgPath
+        layer.mask = maskLayer
+    }
+    
+    func roundedRightBorders() {
+        let path = UIBezierPath(roundedRect: bounds,
+                                byRoundingCorners:[.topRight, .bottomRight],
+                                cornerRadii: CGSize(width: 8, height:  8))
+        let maskLayer = CAShapeLayer()
+        maskLayer.path = path.cgPath
+        layer.mask = maskLayer
+    }
+}

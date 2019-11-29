@@ -13,6 +13,13 @@ protocol KeyboardDelegate {
     func italic(_ selected: Bool)
     func underline(_ selected: Bool)
     func strikethrough(_ selected: Bool)
+    
+    func lineListing(_ selected: Bool)
+    func bulletListing(_ selected: Bool)
+    func numbersListing(_ selected: Bool)
+    
+    func indentingForward(_ selected: Bool)
+    func indentingBackward(_ selected: Bool)
 }
 
 typealias AttributesDictionary = [NSAttributedString.Key: Any]
@@ -25,12 +32,7 @@ class CustomKeyboard: UIView {
     @IBOutlet weak var btnBold: UIButton! {
         didSet {
             btnBold.setTitleColor(.white, for: .selected)
-            let path = UIBezierPath(roundedRect: btnBold.bounds,
-                                    byRoundingCorners:[.topLeft, .bottomLeft],
-                                    cornerRadii: CGSize(width: 8, height:  8))
-            let maskLayer = CAShapeLayer()
-            maskLayer.path = path.cgPath
-            btnBold.layer.mask = maskLayer
+            btnBold.roundedLeftBorders()
         }
     }
     @IBOutlet weak var btnItalic: UIButton! {
@@ -46,12 +48,36 @@ class CustomKeyboard: UIView {
     @IBOutlet weak var btnStrikethrough: UIButton! {
         didSet {
             btnStrikethrough.setTitleColor(.white, for: .selected)
-            let path = UIBezierPath(roundedRect: btnStrikethrough.bounds,
-                                    byRoundingCorners:[.topRight, .bottomRight],
-                                    cornerRadii: CGSize(width: 8, height:  8))
-            let maskLayer = CAShapeLayer()
-            maskLayer.path = path.cgPath
-            btnStrikethrough.layer.mask = maskLayer
+            btnStrikethrough.roundedRightBorders()
+        }
+    }
+    @IBOutlet weak var btnLineListing: UIButton! {
+        didSet {
+            btnLineListing.setTitleColor(.white, for: .selected)
+            btnLineListing.roundedLeftBorders()
+        }
+    }
+    @IBOutlet weak var btnNumbersListing: UIButton! {
+        didSet {
+            btnNumbersListing.setTitleColor(.white, for: .selected)
+        }
+    }
+    @IBOutlet weak var btnBulletsListing: UIButton! {
+        didSet {
+            btnBulletsListing.setTitleColor(.white, for: .selected)
+            btnBulletsListing.roundedRightBorders()
+        }
+    }
+    @IBOutlet weak var btnIndentBackward: UIButton! {
+        didSet {
+            btnIndentBackward.setTitleColor(.white, for: .selected)
+            btnIndentBackward.roundedLeftBorders()
+        }
+    }
+    @IBOutlet weak var btnIndentForward: UIButton! {
+        didSet {
+            btnIndentForward.setTitleColor(.white, for: .selected)
+            btnIndentForward.roundedRightBorders()
         }
     }
     
@@ -92,9 +118,8 @@ class CustomKeyboard: UIView {
     
     //MARK: - Actions
     
-    @IBAction func onTap(_ sender: UIButton) {
-        sender.isSelected.toggle()
-        sender.backgroundColor = sender.isSelected ? #colorLiteral(red: 0.9764705896, green: 0.850980401, blue: 0.5490196347, alpha: 1) : #colorLiteral(red: 0.6979769468, green: 0.6980791688, blue: 0.6979545951, alpha: 1)
+    @IBAction func onTapWordModifiers(_ sender: UIButton) {
+        sender.updateStatusForTextEditor()
         
         if sender == btnBold {
             isBold = sender.isSelected
@@ -109,5 +134,34 @@ class CustomKeyboard: UIView {
             isStrikethrough = sender.isSelected
             delegate?.strikethrough(sender.isSelected)
         }
+    }
+    
+    @IBAction func onTapListingOptions(_ sender: UIButton) {
+        sender.updateStatusForTextEditor()
+        
+        if sender == btnLineListing {
+            delegate?.lineListing(sender.isSelected)
+        } else if sender == btnNumbersListing {
+            delegate?.numbersListing(sender.isSelected)
+        } else if sender == btnBulletsListing {
+            delegate?.bulletListing(sender.isSelected)
+        }
+    }
+    
+    @IBAction func onTapIndentingOptions(_ sender: UIButton) {
+        sender.updateStatusForTextEditor()
+        
+        if sender == btnIndentForward {
+            delegate?.indentingForward(sender.isSelected)
+        } else if sender == btnIndentBackward {
+            delegate?.indentingBackward(sender.isSelected)
+        }
+    }
+}
+
+fileprivate extension UIButton {
+    func updateStatusForTextEditor() {
+        isSelected.toggle()
+        backgroundColor = isSelected ? #colorLiteral(red: 0.9764705896, green: 0.850980401, blue: 0.5490196347, alpha: 1) : #colorLiteral(red: 0.6979769468, green: 0.6980791688, blue: 0.6979545951, alpha: 1)
     }
 }
