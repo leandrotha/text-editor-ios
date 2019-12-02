@@ -93,7 +93,7 @@ class CustomKeyboard: UIView {
     
     convenience init() {
         let width: CGFloat = UIScreen.main.bounds.width
-        let height: CGFloat = 300.0
+        let height: CGFloat = UIScreen.main.bounds.height * 0.333
         let frame = CGRect(origin: .zero, size: CGSize(width: width, height: height))
         
         self.init(frame: frame)

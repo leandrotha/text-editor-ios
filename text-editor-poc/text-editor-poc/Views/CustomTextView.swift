@@ -37,7 +37,6 @@ class CustomTextView: UITextView {
         super.awakeFromNib()
         
         editorKeyboard.delegate = self
-       // delegate = self
         addOptions()
     }
     
@@ -48,7 +47,7 @@ class CustomTextView: UITextView {
         optionsToolbar.barStyle = .default
 
         let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let options: UIBarButtonItem = UIBarButtonItem(title: "Options", style: .done, target: self, action: #selector(toggleOptions))
+        let options: UIBarButtonItem = UIBarButtonItem(title: "Options", style: .done, target: self, action: #selector(toggleOptions(_:)))
 
         let items = [flexSpace, options]
         optionsToolbar.items = items
@@ -57,11 +56,12 @@ class CustomTextView: UITextView {
         inputAccessoryView = optionsToolbar
     }
     
-    @objc func toggleOptions() {
+    @objc func toggleOptions(_ sender: UIBarButtonItem) {
         resignFirstResponder()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
             guard let self = self else {return}
             self.inputView = self.inputView as? CustomKeyboard == nil ? self.editorKeyboard : nil
+            sender.title = sender.title == "Options" ? "Keyboard" : "Options"
             self.becomeFirstResponder()
         }
     }
@@ -74,13 +74,13 @@ extension CustomTextView: KeyboardDelegate {
         guard let font = font else {return UIFont.systemFont(ofSize: 14)}
         
         if isBold && isItalic {
-            return font.boldItalics()
+            return font.boldItalics
         } else if !isBold && isItalic {
-            return font.italics()
+            return font.italics
         } else if isBold && !isItalic {
-            return font.bold()
+            return font.bold
         } else {
-            return font.default
+            return font.regular
         }
     }
     

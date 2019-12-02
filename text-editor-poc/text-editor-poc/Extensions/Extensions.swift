@@ -18,20 +18,31 @@ extension UIFont {
         return self
     }
 
-    var `default`: UIFont {
-        get { UIFont(name: "Helvetica", size: 14)! }
+    static var `default`: UIFont {
+        get { UIFont.systemFont(ofSize: 14) }
     }
     
-    func italics() -> UIFont {
+    var italics: UIFont {
         return withTraits(.traitItalic)
     }
 
-    func bold() -> UIFont {
+    var bold: UIFont {
         return withTraits(.traitBold)
     }
 
-    func boldItalics() -> UIFont {
+    var boldItalics: UIFont {
         return withTraits([.traitBold, .traitItalic])
+    }
+    
+    var regular: UIFont {
+        if !fontDescriptor.symbolicTraits.contains(.traitBold) && !fontDescriptor.symbolicTraits.contains(.traitItalic){
+            return self
+        } else {
+            var traits = fontDescriptor.symbolicTraits
+            traits.remove(.traitBold)
+            traits.remove(.traitItalic)
+            return UIFont(descriptor: fontDescriptor.withSymbolicTraits(traits)!, size: self.pointSize)
+        }
     }
 }
 
